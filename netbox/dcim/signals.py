@@ -1,9 +1,12 @@
 from django.db.models.signals import post_save, pre_delete
 from django.dispatch import receiver
 
+from extras.signals import disable_for_loaddata
+
 from .models import Cable, Device, VirtualChassis
 
 
+@disable_for_loaddata
 @receiver(post_save, sender=VirtualChassis)
 def assign_virtualchassis_master(instance, created, **kwargs):
     """
@@ -17,6 +20,7 @@ def assign_virtualchassis_master(instance, created, **kwargs):
             device.save()
 
 
+@disable_for_loaddata
 @receiver(pre_delete, sender=VirtualChassis)
 def clear_virtualchassis_members(instance, **kwargs):
     """
@@ -29,6 +33,7 @@ def clear_virtualchassis_members(instance, **kwargs):
         device.save()
 
 
+@disable_for_loaddata
 @receiver(post_save, sender=Cable)
 def update_connected_endpoints(instance, **kwargs):
     """
@@ -54,6 +59,7 @@ def update_connected_endpoints(instance, **kwargs):
         endpoint_b.save()
 
 
+@disable_for_loaddata
 @receiver(pre_delete, sender=Cable)
 def nullify_connected_endpoints(instance, **kwargs):
     """

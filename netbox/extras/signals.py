@@ -1,6 +1,7 @@
 from cacheops.signals import cache_invalidated, cache_read
 from django.dispatch import Signal
 from prometheus_client import Counter
+from functools import wraps
 
 
 #
@@ -10,6 +11,15 @@ from prometheus_client import Counter
 cacheops_cache_hit = Counter('cacheops_cache_hit', 'Number of cache hits')
 cacheops_cache_miss = Counter('cacheops_cache_miss', 'Number of cache misses')
 cacheops_cache_invalidated = Counter('cacheops_cache_invalidated', 'Number of cache invalidations')
+
+
+def disable_for_loaddata(signal_handler):
+    @wraps(signal_handler)
+    def wrapper(*args, **kwargs):
+        if kwargs['raw']:
+            return
+        signal_handler(*args, **kwargs)
+    return wrapper
 
 
 def cache_read_collector(sender, func, hit, **kwargs):

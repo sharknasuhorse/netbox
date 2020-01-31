@@ -2,9 +2,12 @@ from django.db.models.signals import post_delete, post_save
 from django.dispatch import receiver
 from django.utils import timezone
 
+from extras.signals import disable_for_loaddata
+
 from .models import Circuit, CircuitTermination
 
 
+@disable_for_loaddata
 @receiver((post_save, post_delete), sender=CircuitTermination)
 def update_circuit(instance, **kwargs):
     """
