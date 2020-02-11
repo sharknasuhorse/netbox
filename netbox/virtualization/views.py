@@ -120,7 +120,14 @@ class ClusterView(PermissionRequiredMixin, View):
             'cluster': cluster,
             'device_table': device_table,
         })
+class ClusterResourceView(PermissionRequiredMixin, View):
+    permission_required = 'virtualization.view_cluster'
+    def get(self, request, pk):
+        cluster = get_object_or_404(Cluster, pk=pk)
 
+        return render(request, 'virtualization/cluster_resource.html', {
+            'cluster': cluster,
+        })
 
 class ClusterCreateView(PermissionRequiredMixin, ObjectEditView):
     permission_required = 'virtualization.add_cluster'
@@ -253,7 +260,7 @@ class ClusterRemoveDevicesView(PermissionRequiredMixin, View):
 
 class VirtualMachineListView(PermissionRequiredMixin, ObjectListView):
     permission_required = 'virtualization.view_virtualmachine'
-    queryset = VirtualMachine.objects.prefetch_related('cluster', 'tenant', 'role', 'primary_ip4', 'primary_ip6')
+    queryset = VirtualMachine.objects.prefetch_related('cluster', 'cluster_node', 'tenant', 'role', 'primary_ip4', 'primary_ip6')
     filterset = filters.VirtualMachineFilterSet
     filterset_form = forms.VirtualMachineFilterForm
     table = tables.VirtualMachineDetailTable

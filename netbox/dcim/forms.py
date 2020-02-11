@@ -1596,6 +1596,20 @@ class DeviceForm(BootstrapMixin, TenancyForm, CustomFieldModelForm):
             api_url='/api/virtualization/clusters/',
         )
     )
+    
+    cpus = forms.IntegerField(
+    required=False,
+    label='CPUs'
+    )
+    memory = forms.IntegerField(
+        required=False,
+        label='Memory (MB)'
+    )
+    disk = forms.IntegerField(
+        required=False,
+        label='Disk (GB)'
+    )
+    
     comments = CommentField()
     tags = TagField(required=False)
     local_context_data = JSONField(
@@ -1605,10 +1619,14 @@ class DeviceForm(BootstrapMixin, TenancyForm, CustomFieldModelForm):
 
     class Meta:
         model = Device
+        nullable_fields = [
+            'cpus', 'memory', 'disk'
+        ]
+
         fields = [
             'name', 'device_role', 'device_type', 'serial', 'asset_tag', 'site', 'rack', 'position', 'face',
             'status', 'platform', 'primary_ip4', 'primary_ip6', 'cluster_group', 'cluster', 'tenant_group', 'tenant',
-            'comments', 'tags', 'local_context_data'
+            'comments', 'tags', 'local_context_data','cpus', 'memory', 'disk'
         ]
         help_texts = {
             'device_role': "The function this device serves",

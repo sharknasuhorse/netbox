@@ -52,6 +52,10 @@
                 <a href="{% url 'virtualization:cluster_changelog' pk=cluster.pk %}">Changelog</a>
             </li>
         {% endif %}
+        <li role="presentation"{% if active_tab == 'resource' %} class="active"{% endif %}>
+            <a href="{% url 'virtualization:cluster_resource' pk=cluster.pk %}">Resource</a>
+        </li>
+
     </ul>
 {% endblock %}
 

@@ -188,6 +188,24 @@
                         <td>Asset Tag</td>
                         <td><span>{{ device.asset_tag|placeholder }}</span></td>
                     </tr>
+                    <tr>
+                        <td>CPU</td>
+                        <td><span>{{ device.cpus|placeholder }}</span></td>
+                    </tr>
+                    <tr>
+                        <td>Memory (MB)</td>
+                        <td><span>{{ device.memory|placeholder }}</span></td>
+                    </tr>
+                    <tr>
+                        <td>Disk (GB)</td>
+                        <td><span>{{ device.disk|placeholder }}</span></td>
+                    </tr>
+
+
+
+
+
+
                 </table>
             </div>
             {% if vc_members %}

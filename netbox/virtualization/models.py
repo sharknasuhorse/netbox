@@ -186,6 +186,15 @@ class VirtualMachine(ChangeLoggedModel, ConfigContextModel, CustomFieldModel):
         on_delete=models.PROTECT,
         related_name='virtual_machines'
     )
+
+    cluster_node = models.ForeignKey(
+        to='dcim.Device',
+        on_delete=models.PROTECT,
+        related_name='virtual_machines',
+        blank=True,
+        null=True
+    )
+
     tenant = models.ForeignKey(
         to='tenancy.Tenant',
         on_delete=models.PROTECT,

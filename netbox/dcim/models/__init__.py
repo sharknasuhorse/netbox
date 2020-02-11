@@ -1407,7 +1407,22 @@ class Device(ChangeLoggedModel, ConfigContextModel, CustomFieldModel):
     images = GenericRelation(
         to='extras.ImageAttachment'
     )
-
+    cpus = models.PositiveSmallIntegerField(
+        blank=True,
+        null=True,
+        verbose_name='CPUs'
+    )
+    memory = models.PositiveIntegerField(
+        blank=True,
+        null=True,
+        verbose_name='Memory (MB)'
+    )
+    disk = models.PositiveIntegerField(
+        blank=True,
+        null=True,
+        verbose_name='Disk (GB)'
+    )
+    
     objects = NaturalOrderingManager()
     tags = TaggableManager(through=TaggedItem)
 

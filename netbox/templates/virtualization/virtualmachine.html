@@ -179,6 +179,10 @@
                     <td>Cluster Type</td>
                     <td>{{ virtualmachine.cluster.type }}</td>
                 </tr>
+                <tr>
+                    <td>Cluster Node</td>
+                    <td><a href="{{ virtualmachine.cluster_node.get_absolute_url }}"> {{ virtualmachine.cluster_node}}</a></td>
+                </tr>
             </table>
         </div>
         <div class="panel panel-default">

@@ -103,12 +103,13 @@ class VirtualMachineTable(BaseTable):
     name = tables.LinkColumn()
     status = tables.TemplateColumn(template_code=VIRTUALMACHINE_STATUS)
     cluster = tables.LinkColumn('virtualization:cluster', args=[Accessor('cluster.pk')])
+    cluster_node = tables.LinkColumn('dcim:device', args=[Accessor('cluster_node.pk')])
     role = tables.TemplateColumn(VIRTUALMACHINE_ROLE)
     tenant = tables.TemplateColumn(template_code=COL_TENANT)
 
     class Meta(BaseTable.Meta):
         model = VirtualMachine
-        fields = ('pk', 'name', 'status', 'cluster', 'role', 'tenant', 'vcpus', 'memory', 'disk')
+        fields = ('pk', 'name', 'status', 'cluster', 'cluster_node', 'role', 'tenant', 'vcpus', 'memory', 'disk')
 
 
 class VirtualMachineDetailTable(VirtualMachineTable):
@@ -118,7 +119,7 @@ class VirtualMachineDetailTable(VirtualMachineTable):
 
     class Meta(BaseTable.Meta):
         model = VirtualMachine
-        fields = ('pk', 'name', 'status', 'cluster', 'role', 'tenant', 'vcpus', 'memory', 'disk', 'primary_ip')
+        fields = ('pk', 'name', 'status', 'cluster', 'cluster_node', 'role', 'tenant', 'vcpus', 'memory', 'disk', 'primary_ip')
 
 
 #

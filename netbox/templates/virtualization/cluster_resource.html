@@ -1,0 +1,104 @@
+{% extends '_base.html' %}
+{% load buttons %}
+{% load custom_links %}
+{% load helpers %}
+
+{% block header %}
+    <div class="row noprint" xmlns="http://www.w3.org/1999/html">
+        <div class="col-sm-8 col-md-9">
+            <ol class="breadcrumb">
+                <li><a href="{{ cluster.type.get_absolute_url }}">{{ cluster.type }}</a></li>
+                {% if cluster.group %}
+                    <li><a href="{{ cluster.group.get_absolute_url }}">{{ cluster.group }}</a></li>
+                {% endif %}
+                <li>{{ cluster }}</li>
+            </ol>
+        </div>
+        <div class="col-sm-4 col-md-3">
+            <form action="{% url 'virtualization:cluster_list' %}" method="get">
+                <div class="input-group">
+                    <input type="text" name="q" class="form-control" placeholder="Search clusters" />
+                    <span class="input-group-btn">
+                        <button type="submit" class="btn btn-primary">
+                            <span class="fa fa-search" aria-hidden="true"></span>
+                        </button>
+                    </span>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="pull-right noprint">
+        {% if perms.virtualization.add_cluster %}
+            {% clone_button cluster %}
+        {% endif %}
+        {% if perms.virtualization.change_cluster %}
+            {% edit_button cluster %}
+        {% endif %}
+        {% if perms.virtualization.delete_cluster %}
+            {% delete_button cluster %}
+        {% endif %}
+    </div>
+    <h1>{% block title %}{{ cluster }}{% endblock %}</h1>
+    {% include 'inc/created_updated.html' with obj=cluster %}
+    <div class="pull-right noprint">
+        {% custom_links cluster %}
+    </div>
+    <ul class="nav nav-tabs">
+        <li role="presentation"{% if active_tab == 'resource' %} class="active"{% endif %}>
+            <a href="{{ cluster.get_absolute_url }}">Cluster</a>
+        </li>
+        {% if perms.extras.view_objectchange %}
+            <li role="presentation"{% if active_tab == 'changelog' %} class="active"{% endif %}>
+                <a href="{% url 'virtualization:cluster_changelog' pk=cluster.pk %}">Changelog</a>
+            </li>
+        {% endif %}
+        <li role="presentation"{% if not active_tab %} class="active"{% endif %}>
+            <a href="{% url 'virtualization:cluster_resource' pk=cluster.pk %}">Resource</a>
+        </li>
+
+    </ul>
+{% endblock %}
+
+
+{% block content %}
+<div class="panel panel-default">
+
+    <div class="panel-heading">
+        <strong>Host Devices</strong>
+    </div>
+</div>
+
+<div class="progress">
+	<div class="progress-bar" role="progressbar" style="width: 60%;">
+		60%
+	</div>
+</div>
+
+
+<div class="progress">
+	<div class="progress-bar" role="progressbar" style="width: 20%;">
+		20%
+	</div>
+</div>
+<div class="progress">
+	<div class="progress-bar progress-bar-success" role="progressbar" style="width: 100%;">
+		100%
+	</div>
+</div>
+<div class="progress">
+	<div class="progress-bar progress-bar-info" role="progressbar" style="width: 80%;">
+		80%
+	</div>
+</div>
+<div class="progress">
+	<div class="progress-bar progress-bar-warning" role="progressbar" style="width: 60%;">
+		60%
+	</div>
+</div>
+<div class="progress">
+	<div class="progress-bar progress-bar-danger" role="progressbar" style="width: 40%;">
+		40%
+	</div>
+</div>
+
+{% endblock %}
